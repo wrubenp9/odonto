@@ -78,7 +78,7 @@ class RegisterUserForm(forms.ModelForm):
         fields = ['username', 'email', 'first_name', 'last_name']
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Nome de usuário'}),
-            'email': forms.TextInput(attrs={'placeholder': 'exemplo@exemplo'}),
+            'email': forms.TextInput(attrs={'placeholder': 'exemplo@exemplo.com'}),
             'first_name': forms.TextInput(attrs={'placeholder': 'Nome'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Sobrenome'}),
         }
