@@ -33,50 +33,33 @@ class RegisterUserForm(forms.ModelForm):
         print(f'email ok! {email}')
         return email
 
-
+    #confere se o campo de senha1 é igual ao campo de senha2
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
-        
+
         if password1 and password2 and password1 != password2:
             print('password1:' + password1)
             print('password2:' + password2)
             raise forms.ValidationError('')
-
         return password2
-    
+
+    #validando o campo de senha1
     def clean_password1(self):
         password1 = self.cleaned_data.get('password1')
         minimal_len_char = 8
 
         if len(password1) < minimal_len_char:
-            raise forms.ValidationError(f'• Mínimo {minimal_len_char} caracteres!')
+            raise forms.ValidationError(
+                f'• Mínimo {minimal_len_char} caracteres!')
         return password1
 
     def save(self, commit=True):
         user = super(RegisterUserForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
-            print('salvo\n')
             user.save()
         return user
-
-    # def is_valid(self):
-    #     valid = True
-    #     User = super(RegisterUserForm, self).save(commit=False)
-    #     username_exists = User.objects.filter(username=self.cleaned_data['username'])
-    #     print(username_exists)
-
-    # def is_valid(self):
-    #     valid = True
-    #     User = get_user_model()
-    #     username_exists = User.objects.filter(username=self.cleaned_data['username']).exists()
-
-    #     if username_exists:
-    #         username_exists_aux = self.cleaned_data['username']
-    #         messages.error(f'Nome de usuário já existente, {username_exists_aux}.')
-    #         valid = False
-    #     return valid
 
     class Meta:
         model = User
@@ -90,8 +73,7 @@ class RegisterUserForm(forms.ModelForm):
 
 
 class CustomAuthForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'validate',
-                                                             'placeholder': 'Username ou E-mail',
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username ou E-mail',
                                                              'autocomplete': 'off'}))
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
@@ -106,7 +88,6 @@ class CustomAuthForm(AuthenticationForm):
         password = self.cleaned_data['password']
         if User.objects.filter(password=password).exists():
             raise forms.ValidationError('Senha i!')
-            # raise ValidationError('Senha incorreta!')
         return password
 
 
