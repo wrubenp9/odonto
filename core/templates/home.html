@@ -4,7 +4,6 @@
 {% block titulo %} Pagina Principal {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/core/normalize.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/core/home.css' %}">
 {% endblock %}
 
@@ -28,32 +27,37 @@
                 <div class="item">
                     <img src="{% static 'img/icons/journal-medical.svg'%}" />
                 </div>
-                <p>Histórico de Consulta</p>
+                <p>Consultas</p>
                 <!-- <p>Clientes</p> -->
             </div>
-            <div class="fast-action">
+
+            <!-- <div class="fast-action">
                 <div class="item">
                     <img src="{% static 'img/icons/last-appointment.svg'%}" />
                 </div>
                 <p>Última Consulta</p>
-            </div>
+            </div> -->
+
             <div class="fast-action">
-                <div class="item">
-                    <img src="{% static 'img/icons/user.svg'%}" />
-                </div>
+                <a href="{% url 'profile:my_profile' %}">
+                    <div class="item">
+                        <img src="{% static 'img/icons/user.svg'%}" />
+                    </div>
+                </a>
                 <p>Meu Perfil</p>
             </div>
-            <div class="fast-action">
-                <a href="{% url 'quiz:forms' %}"></a>
+
+            <!-- <div class="fast-action">
+                <a href="{% url 'form:anamnese' %}"></a>
                 <div class="item">
                     <img src="{% static 'img/icons/card-checklist.svg'%}" />
                 </div>
                 </a>
                 <p>Anamnese</p>
+            </div> -->
 
-            </div>
             <div class="fast-action">
-                <a href="{% url 'quiz:forms' %}">
+                <a href="{% url 'form:anamnese' %}">
                     <div class="item">
                         <img src="{% static 'img/icons/calendar-event.svg'%}" />
                     </div>

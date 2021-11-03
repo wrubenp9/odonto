@@ -25,7 +25,7 @@
             <a class="logo" href="{% url 'home'%}">SuaLogo</a>
             <ul class="nav-links">
                 {% block nav-links %}
-                
+
                 {% endblock %}
                 <li>
                     <a href="{% url 'logout'%}">
@@ -43,23 +43,21 @@
 
     <div id="mobile__menu" class="overlay">
         <div class="nav-link">
-        <div class="nav-link-icon">
-            <a class="logout" href="{% url 'logout'%}">
-                <img class="icon" src="{% static 'img/icons/logout.svg'%}" />
-                <span>Sair</span>
-            </a>
-            <a class="close ">&times;</a>
-        </div>
+            <div class="nav-link-icon">
+                <a class="logout" href="{% url 'logout'%}">
+                    <img class="icon" src="{% static 'img/icons/logout.svg'%}" />
+                    <span>Sair</span>
+                </a>
+                <a class="close ">&times;</a>
+            </div>
         </div>
 
         <div class="overlay-content">
-            <!-- <div class="block"></div> -->
             <div class="orvelay-link">
                 <a href="{% url 'home'%}"><i class="fas fa-home"></i>Home</a>
-                <a href="#"><i class="far fa-sticky-note"></i>Histórico</a>
-                <a href="#"><i class="far fa-sticky-note"></i>Histórico</a>
-                <a href="{% url 'quiz:forms' %}"><i class="far fa-sticky-note"></i>Formulário</a>
-                <a href="#"><i class="far fa-sticky-note"></i>Histórico</a>
+                <a href="{% url 'home'%}"><i class="fas fa-home"></i>Home</a>
+                <a href="{% url 'home'%}"><i class="fas fa-home"></i>Home</a>
+                <a href="{% url 'form:anamnese' %}"><i class="far fa-sticky-note"></i>Formulário</a>
             </div>
         </div>
 
@@ -76,6 +74,7 @@
         <p>&copy 2021 - Wesley Ruben</p>
     </footer> -->
     <script type="text/javascript" src="{% static 'js/mobile.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/loading.js' %}"></script>
 
 </body>
 

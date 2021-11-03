@@ -13,11 +13,6 @@
     src: url('../../fonts/poppins/Poppins-Bold.ttf');
 }
 
-@font-face {
-    font-family: Poppins-SemiBold;
-    src: url('../../fonts/poppins/Poppins-SemiBold.ttf');
-}
-
 * {
     box-sizing: border-box;
     margin: 0;

@@ -36,8 +36,6 @@ nav {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    /* height: 53px; */
-    /* height: 65px; */
     width: 100%;
     padding: 10px 5%;
     background-color: #09092b;
@@ -253,4 +251,9 @@ nav #menu {
         position: relative;
         top: 53px;
     }
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
 }

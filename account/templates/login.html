@@ -13,12 +13,6 @@
                 <img src="{% static 'img/account/logo-odonto.svg' %}">
             </div>
 
-            {% for message in messages %}
-
-            {{message}}
-
-            {% endfor%}
-
             <form class="form" method="post">
                 {% csrf_token %}
                 <div class="box-form">
@@ -40,9 +34,14 @@
                     <a href="{% url 'register' %}">Registre-se</a>
                 </div>
                 <div class="box-button">
-                    <button type="submit">Login</button>
+                    <button type="submit">Entrar</button>
                 </div>
             </form>
+            <div class='msg-error'>
+                {% for message in messages %}
+                {{message}}
+                {% endfor%}
+            </div>
         </div>
     </div>
 </section>

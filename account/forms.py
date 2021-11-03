@@ -1,12 +1,10 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib import messages
 
 from core.mail import send_mail_template
 from core.utils import generate_hash_key
 
 from django.contrib.auth.forms import AuthenticationForm
-from django.core.exceptions import ValidationError
 
 
 from .models import PasswordReset
@@ -15,18 +13,16 @@ User = get_user_model()
 
 
 class RegisterUserForm(forms.ModelForm):
-    password1 = forms.CharField(
-        label='Senha', widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
-    password2 = forms.CharField(label='Confirmar Senha', widget=forms.PasswordInput(
-        attrs={'placeholder': 'Senha'}))
+    password1 = forms.CharField(label='Senha',
+                                widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
+
+    password2 = forms.CharField(label='Confirmar Senha',
+                                widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username):
-            print(f'\nNome de usuário já existe! {username}')
             raise forms.ValidationError('Nome de usuário já existe!')
-        print(f'\nusername ok! {username}')
-        # messages.error('Nome de usuário já existe!')
         return username
 
     def clean_email(self):
@@ -37,16 +33,25 @@ class RegisterUserForm(forms.ModelForm):
         print(f'email ok! {email}')
         return email
 
-    def clean_password(self):
-        password1 = self.cleaned_data['password1']
-        password2 = self.cleaned_data['password2']
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        
         if password1 and password2 and password1 != password2:
-            print(
-                f'As senhas não são iguais. 1: {password1} | 2: {password2}\n')
-            raise forms.ValidationError('As senhas não são iguais.')
-            # messages.error('As senhas não são iguais.')
-        print(f'password ok! 1: {password1} | 2: {password2}\n')
+            print('password1:' + password1)
+            print('password2:' + password2)
+            raise forms.ValidationError('')
+
         return password2
+    
+    def clean_password1(self):
+        password1 = self.cleaned_data.get('password1')
+        minimal_len_char = 8
+
+        if len(password1) < minimal_len_char:
+            raise forms.ValidationError(f'• Mínimo {minimal_len_char} caracteres!')
+        return password1
 
     def save(self, commit=True):
         user = super(RegisterUserForm, self).save(commit=False)
@@ -92,16 +97,15 @@ class CustomAuthForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}))
 
     def clean_username(self):
-        username = self.cleaned_data['username']
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError('Nome de usuário já existe!')
-        #    raise ValidationError('Usuário errado ou email errado!')
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username) != username:
+            raise forms.ValidationError('Usuário errado ou não existe!')
         return username
 
     def clean_password(self):
         password = self.cleaned_data['password']
         if User.objects.filter(password=password).exists():
-            raise forms.ValidationError('As senhas não são iguais.')
+            raise forms.ValidationError('Senha i!')
             # raise ValidationError('Senha incorreta!')
         return password
 

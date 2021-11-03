@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
-from .forms import CustomAuthForm
 
+from .forms import CustomAuthForm
 from .forms import RegisterUserForm
 from .forms import PasswordResetForm
 
@@ -19,13 +19,16 @@ def register(request):
         if request.user.is_authenticated:
             return redirect('home')
     
-    if form.is_valid():
-        form.save()
-        return redirect('login')
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+        else:
+            messages.error(request, 'Erro ao cadastrar!')
+            # return redirect('register')
+
     else:
         form = RegisterUserForm()
-        messages.success(request, 'erro ao cadastrar!')
-        
     context = {
         'form': form
     }
@@ -49,8 +52,9 @@ def login(request):
             auth_login(request, usuario)
             return redirect('/')
         else:
-            messages.error(request,'Erro ao logar!')
+            messages.error(request,'Senha ou Login errado!')
             form_login = CustomAuthForm()
+            return redirect('/')
     else:
         form_login = CustomAuthForm()
 
@@ -62,4 +66,8 @@ def login(request):
 def password_reset(request):
     template_name = 'password_reset.html'
     form = PasswordResetForm()
+
+@login_required
+def password_edit(request):
+    pass
 

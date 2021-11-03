@@ -12,11 +12,6 @@
         <div class="box-form">
             <div class="title"><span>Cadastro</span>
             </div>
-            <!-- {% if messages %}
-                {% for message in messages %}
-                    alert(message);
-                {% endfor %}
-            {% endif %} -->
             <form class="form" method="post" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-item">
@@ -24,10 +19,14 @@
                     <div class="input">
                         <i class="fas fa-envelope"></i>
                         {{form.email}}
-                            <!-- {{message.success}} -->
-   
                     </div>
                 </div>
+                <!-- error email -->
+                {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                <span class="msg-error">{{ error }}</span>
+                {% endfor %}
+                {% endif %}
 
                 <div class="form-short form-item">
                     <label for="username">Nome de Usuário</label>
@@ -36,6 +35,13 @@
                         {{form.username}}
                     </div>
                 </div>
+                <!-- error username -->
+                {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                <span class="msg-error">{{ error }}</span>
+                {% endfor %}
+                {% endif %}
+
                 <div class="form-beside form-item">
                     <div class="form-short">
                         <label for="first_name">Nome</label>
@@ -59,6 +65,13 @@
                             <i class="fas fa-unlock"></i>
                             {{form.password1}}
                         </div>
+                        {% if form.password1.errors %}
+                        {% for error in form.password1.errors %}
+                        <span class="msg-error">{{ error }}</span>
+                        {% endfor %}
+                        {% else %}
+                        <span class="msg">• Mínimo 8 caracteres!</span>
+                        {% endif %}
                     </div>
                     <div class="password form-short p-20">
                         <label for="password2">Confirmar senha</label>
@@ -66,8 +79,14 @@
                             <i class="fas fa-unlock"></i>
                             {{form.password2}}
                         </div>
+                        <!-- {% if form.password2.errors %}
+                        {% for error in form.password2.errors %}
+                        <span class="msg-error">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %} -->
                     </div>
                 </div>
+
                 <div class="form-link">
                     <span>Ja tenho conta.</span>
                     <a href="{% url 'login' %}">Fazer login!</a>
@@ -76,6 +95,12 @@
                     <button type="submit">Cadastrar</button>
                 </div>
             </form>
+            <!-- <div class='msg'>
+                {% for message in messages %}
+                {{message}}
+                {% endfor%}
+            </div> -->
+
         </div>
     </div>
 </section>
